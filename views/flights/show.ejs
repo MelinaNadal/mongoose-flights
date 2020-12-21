@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Mongoose Flights</title>
+</head>
+
+<body>
+    <h1>See Details For a FLight</h1>
+    <a href="/">Home</a>
+    <a href="/flights">Back to All Flights</a>
+    <a href="/flights/new">Create New Flight</a>
+    <a href="/flights/<%= flight._id %>/tickets/new">Add Ticket to this Flight</a>
+    <hr>
+    <h3><%= flight.airline %></h3>
+    <p><%= flight.flightNo %></p>
+    <p><%= flight.departs.toLocaleDateString() %></p>
+    <hr>
+    <h2>Add Destination For This Flight</h2>
+    <form action="/flights/<%= flight._id%>/destinations" method="post">
+        <select name="airport">
+            <option value="AUS">AUS</option>
+            <option value="DAL">DAL</option>
+            <option value="LAX">LAX</option>
+            <option value="SAN">SAN</option>
+            <option value="SEA">SEA</option>
+        </select><br>
+        <input type="datetime-local" name="arrival"><br>
+        <input type="submit" value="Add Destination">
+    </form>
+    <hr>
+    <% if(flight.destinations.length) { %>
+    <h2>Current Destinations For This Flight</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Airport</th>
+                <th>arrival</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% flight.destinations.forEach(function(destination) { %>
+            <tr>
+                <td><%= destination.airport %></td>
+                <td><%= destination.arrival.toLocaleDateString() %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <% } else { %>
+    <h2>There Are Currently No Destinations For This Flight</h2>
+    <% } %>
+    <hr>
+    <% if(tickets.length) { %>
+        <h3>Here are the Tickets For This Flight</h3>
+        <% tickets.forEach(function(ticket) { %>
+            <p>Price: $<%= ticket.price%>.00 - Seat: <%= ticket.seat %></p>
+        <% }) %>
+    <% } else { %>
+        <h3>There Are No Tickets For This Flight</h3>
+    <% } %>
+    <a href="/flights/<%= flight._id %>/tickets/new">Add A New Ticket</a>
+</body>
+
+</html>

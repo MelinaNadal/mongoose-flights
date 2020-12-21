@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Mongoose Flights</title>
+</head>
+<body>
+    <h1>Create a Ticket</h1>
+    <a href="/flights/<%= flightId %>">Cancel</a>
+    <a href="/">Home</a>
+    <form action="/flights/<%= flightId %>/tickets" method="post">
+        <input name="seat" required pattern="[A-F][1-9]\d?"><br>
+        <input name="price" type="number" min="0"><br>
+        <input type="submit" value="Add Ticket"><br>
+    </form>
+</body>
+</html>
